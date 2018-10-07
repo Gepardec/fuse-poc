@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <localRepository>/home/esiegl/Tmp/repository</localRepository>
+ 
+  <profiles>
+    <profile>
+      <id>jboss</id>
+
+      <repositories>
+        <repository>
+            <id>jboss-local</id>
+            <url>file:///home/esiegl/Downloads/redhat-fuse-7.1.0-maven-repository/maven-repository</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>jboss-public</id>
+            <url>http://repository.jboss.org/nexus/content/groups/public</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>fuse-ea</id>
+            <url>https://repository.jboss.org/nexus/content/groups/ea</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+
+  <activeProfiles>
+    <activeProfile>jboss</activeProfile>
+  </activeProfiles>
+</settings>

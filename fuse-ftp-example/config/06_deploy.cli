@@ -1,0 +1,1 @@
+deploy -f ../target/fuse-ftp-example.war

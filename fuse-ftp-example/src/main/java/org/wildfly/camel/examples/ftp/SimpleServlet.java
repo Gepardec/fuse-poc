@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package org.wildfly.camel.examples.cdi;
+package org.wildfly.camel.examples.ftp;
 
 import java.io.IOException;
 

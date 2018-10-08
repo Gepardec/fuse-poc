@@ -25,7 +25,10 @@ Im JBoss server.log sollte eine Ausgabe erscheinen.
 
 ## Run
 
+Konfiguriere FTP- und ActiveMQ-Server in `config/04_set_hosts_and_urls.cli`
+
 Installation und Start von Fuse mit JBSS:
+
 ```
 myjboss configure ./config
 ```
@@ -45,6 +48,11 @@ Als FTP-Server kann ein Docker-Container verwendet werden:
 
 ```
 docker run -e FTP_USER_NAME=bob -e FTP_USER_PASS=12345 -e FTP_USER_HOME=/home/bob -d --name ftpd_server -p 21:21 -p 30000-30009:30000-30009 stilliard/pure-ftpd
+```
+
+Als ActiveMQ-Server kann ebenfalls ein Container verwendet werden
+```
+docker run -d -p 61616:61616 -p 8161:8161 rmohr/activemq
 ```
 
 ## Build

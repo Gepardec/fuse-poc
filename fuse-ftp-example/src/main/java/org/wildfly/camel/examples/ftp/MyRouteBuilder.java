@@ -33,16 +33,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wildfly.camel.examples.cdi;
+package org.wildfly.camel.examples.ftp;
 
-import java.net.InetAddress;
+import javax.enterprise.context.ApplicationScoped;
 
-import javax.inject.Named;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.cdi.ContextName;
 
-@Named("helloBean")
-public class SomeBean {
+@ApplicationScoped
+@ContextName("camel-ftp-context")
+public class MyRouteBuilder extends RouteBuilder {
 
-    public String someMethod(String name) throws Exception {
-        return String.format("Hello %s from %s", name, InetAddress.getLocalHost().getHostAddress());
+    @Override
+    public void configure() throws Exception {
+    	String ftpHost = System.getProperty("ftpHost", "localhost");
+    	from("direct:start").to("log:com.gepardec.demo?level=INFO")
+     	.to(String.format("ftp://bob@%s?password=12345&passiveMode=true", ftpHost));
+    	
+    	from(String.format("ftp://bob@%s?password=12345&passiveMode=true&delete=true", ftpHost))
+    	.to("log:com.gepardec.demo?level=INFO");
+    	
+    	from("file:///tmp/data")
+  	    .log("from file /tmp/data to ActiveMQ")
+  	    .to("activemq:queue:OrdersQueue");
+
+    	from("activemq:queue:OrdersQueue")
+  	    .log("from ActiveMQ to /tmp/result")
+  	    .to("file:///tmp/result");
     }
 }

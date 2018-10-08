@@ -1,0 +1,3 @@
+/system-property=ftpHost:add(value="192.168.214.1")
+/system-property=activeMQUrl:add(value="failover:tcp://192.168.214.1:61616")
+

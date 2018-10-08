@@ -33,26 +33,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wildfly.camel.examples.cdi;
+package org.wildfly.camel.examples.ftp;
 
-import javax.enterprise.context.ApplicationScoped;
+import java.net.InetAddress;
 
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.cdi.ContextName;
+import javax.inject.Named;
 
-@ApplicationScoped
-@ContextName("camel-ftp-context")
-public class MyRouteBuilder extends RouteBuilder {
+@Named("helloBean")
+public class SomeBean {
 
-    @Override
-    public void configure() throws Exception {
-    	from("direct:start").to("log:com.gepardec.demo?level=INFO")
-     	.to("ftp://bob@192.168.214.1?password=12345&passiveMode=true");
-    	
-    	from("ftp://bob@192.168.214.1?password=12345&passiveMode=true&delete=true")
-    	.to("log:com.gepardec.demo?level=INFO");
-    	
-    	from("file:///tmp/data")
-  	    .to("log:com.gepardec.demo?level=INFO");
+    public String someMethod(String name) throws Exception {
+        return String.format("Hello %s from %s", name, InetAddress.getLocalHost().getHostAddress());
     }
 }

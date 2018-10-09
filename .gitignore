@@ -1,0 +1,22 @@
+# IntelliJ
+.idea/
+!.idea/runConfigurations
+
+# Eclipse IDE
+.metadata/
+.settings/
+
+*/**/src/main/java/META-INF/
+bin/
+target/
+.directory
+.project
+.classpath
+.settings
+*.log
+*.diagram
+.attach_pid*
+*.jar
+*.zip
+*.tar.gz
+*.iml

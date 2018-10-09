@@ -1,6 +1,8 @@
-package com.mycompany;
+package com.gepardec.fuse.poc.karaf;
 
 import org.apache.camel.main.Main;
+
+import com.gepardec.fuse.poc.karaf.route.CamelRoute;
 
 public class Launcher {
     /**

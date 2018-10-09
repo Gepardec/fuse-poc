@@ -1,0 +1,17 @@
+= Fuse 7 POC with Karaf
+
+This document describes the poc of Fuse 7 with Karaf as the container runtime
+
+== Configurations
+
+=== Karaf configuration
+The following features are additionally enabled for Karaf, which have been defined in the file link:./configuration/org.apache.karaf.features.cfg[org.apache.karaf.features.cfg]:
+
+* pax.cdi
+* camel-cdi
+
+[IMPORTANT]
+=====================
+The configuration file org.apache.karaf.features.cfg is only taken into account once, so when changes have been made, then you need to delete the cache directory $KARAF_HOME/data/cache
+and to restart the Karaf instance.
+=====================

@@ -1,0 +1,18 @@
+= Camel Fuse 7 examples
+
+This document holds the documentation for the fuse 7 examples
+
+== Camel FTP via GUI
+
+=== Docker FTP Server
+See the following command for starting the ftp docker container. You should replace the bind volume with your intended location.
+
+.Example of starting the ftp docker container
+[source,bash]
+----
+docker run \
+-e FTP_USER_NAME=user -e FTP_USER_PASS=user -e FTP_USER_HOME=/home/user -e FTP_USER_UID=1002 -e FTP_USER_GID=1004 -e PUBLICHOST=localhost \
+-v /home/ghet/workspaces/mayrmelnhof/ftp:/home/user \
+-p 50021:21 -p 30000-30009:30000-30009 \
+stilliard/pure-ftpd
+----

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- #%L Wildfly Camel %% Copyright (C) 2013 - 2015 RedHat %% Licensed under 
+	the Apache License, Version 2.0 (the "License"); you may not use this file 
+	except in compliance with the License. You may obtain a copy of the License 
+	at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable 
+	law or agreed to in writing, software distributed under the License is distributed 
+	on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either 
+	express or implied. See the License for the specific language governing permissions 
+	and limitations under the License. #L% -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+    <camelContext id="spring-context" xmlns="http://camel.apache.org/schema/spring">
+        <endpoint id="transform_xml" uri="dozer:transform_xml?sourceModel=generated_1539855140459.PurchaseOrder&amp;targetModel=generated_1539855141400.PurchaseOrder&amp;marshalId=generated_1539855141400&amp;unmarshalId=generated_1539855140459&amp;mappingFile=transformation.xml"/>
+        <dataFormats>
+            <jaxb contextPath="generated_1539855140459" id="generated_1539855140459"/>
+            <jaxb contextPath="generated_1539855141400" id="generated_1539855141400"/>
+        </dataFormats>
+        <route id="_route1">
+            <from id="fromFTP" uri="ftp:localhost:50021/data/in?passiveMode=true&amp;transferLoggingLevel=TRACE&amp;transferLoggingVerbose=true&amp;delete=true&amp;moveFailed=.error&amp;download=true&amp;delay=2000&amp;greedy=true&amp;initialDelay=2000&amp;password=user&amp;username=user">
+                <description>The incoming ftp connection</description>
+            </from>
+            <log id="logIncomingFTP" logName="camel-ftp-gui" message="Polled file form ftp server"/>
+            <to id="_to1" uri="ref:transform_xml"/>
+            <log id="logXMLTransformation" logName="camel-ftp-gui" message="Transformed the polled file to the new format"/>
+            <to id="toFTP" uri="ftp:localhost:50021/data/out?passiveMode=true&amp;fileExist=Move&amp;moveExisting=backup&amp;password=user&amp;username=user"/>
+        </route>
+    </camelContext>
+</beans>

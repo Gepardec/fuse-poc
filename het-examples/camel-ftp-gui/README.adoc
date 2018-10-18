@@ -1,0 +1,23 @@
+= Fuse 7 Camel FTP via GUI Designer 
+
+This is a template Apache Camel Spring application for the WildFly Camel subsystem. 
+
+This project is setup to allow you to create a Apache Camel Spring application, which can be deployed to an application
+server running the WildFly Camel subsystem. An example Spring XML Camel Route has been created for you, together with an Arquillian
+integration test.
+
+== Try out
+Start the ftp docker container with the following command:
+
+.Shell command for starting the ftp docker container
+[source,bash]
+----
+docker run \
+-e FTP_USER_NAME=user -e FTP_USER_PASS=user -e FTP_USER_HOME=/home/user -e FTP_USER_UID=<USER_UID> -e FTP_USER_GID=<USER_GRID> -e PUBLICHOST=localhost \
+-v <LOCAL_DATA_IN>:/home/user/data/in \
+-p 50021:21 -p 30000-30009:30000-30009 \
+stilliard/pure-ftpd
+----
+
+Open a shell in this container and create the output directory ```/home/user/data/out```. +
+Place the file ```src/main/data/purchaseOrder.xml``` in the local ```data/in``` directory.

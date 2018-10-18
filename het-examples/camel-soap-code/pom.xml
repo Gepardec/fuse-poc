@@ -18,12 +18,12 @@
 		<version.jboss.arquillian>1.1.10.Final</version.jboss.arquillian>
 		<jboss.home>${env.JBOSS_HOME}</jboss.home>
 		<version.maven.surefire.plugin>2.20.1</version.maven.surefire.plugin>
-		<version.apache.camel>2.21.0.fuse-000009</version.apache.camel>
 		<server.config>standalone-camel.xml</server.config>
+		<version.apache.camel>2.21.0.fuse-000009</version.apache.camel>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<version.wildfly.maven.plugin>1.2.0.Final</version.wildfly.maven.plugin>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<version.maven.war.plugin>3.0.0</version.maven.war.plugin>
 	</properties>
@@ -50,6 +50,11 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-cxf</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.jboss.spec.javax.servlet</groupId>
 			<artifactId>jboss-servlet-api_3.1_spec</artifactId>
 			<scope>provided</scope>
@@ -67,6 +72,11 @@
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-cxf</artifactId>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

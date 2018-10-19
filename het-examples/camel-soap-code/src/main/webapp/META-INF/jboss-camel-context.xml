@@ -8,24 +8,21 @@
 	express or implied. See the License for the specific language governing permissions 
 	and limitations under the License. #L% -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:cxf="http://camel.apache.org/schema/cxf"
-	xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
-        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
-
-	<cxf:cxfEndpoint
-		address="http://localhost:8080/camel-test-spring/SinkWebservice"
-		id="cxfProducer"
-		serviceClass="com.gepardec.fuse.poc.soap.code.webservice.SinkWebservice" />
-		
-	<camelContext id="spring-context"
-		xmlns="http://camel.apache.org/schema/spring">
-		<route id="_route1">
-			<from id="_from1" uri="direct:name" />
-			<log id="_log1" message="log" />
-			<to id="toCXFSink" uri="cxf:bean:cxfProducer" />
-		</route>
-	</camelContext>
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd         http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+    <!-- 
+    Will not be found, if this camel context is loaded by n CDI Camel Context.
+    Therefore the CxfEndpoint is produced by a CDI producer
+    <cxf:cxfEndpoint
+        address="http://localhost:8080/camel-test-spring/SinkWebservice"
+        id="cxfProducer" serviceClass="com.gepardec.fuse.poc.soap.code.webservice.SinkWebservice"/> -->
+        
+    <camelContext id="spring-context" xmlns="http://camel.apache.org/schema/spring">
+        <route id="_route1">
+            <from id="_from1" uri="direct:name"/>
+            <log id="_log1" message="log"/>
+            <process id="soapMessageProcessor" ref="sinkProcessor"/>
+            <to id="toCXFSink" uri="cxf:bean:cxfProducer"/>
+        </route>
+    </camelContext>
 </beans>

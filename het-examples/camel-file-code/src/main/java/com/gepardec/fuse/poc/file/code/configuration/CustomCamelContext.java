@@ -9,18 +9,17 @@ import org.apache.camel.impl.DefaultCamelContext;
 import org.slf4j.Logger;
 
 @ApplicationScoped
-@ContextName("camel-file-code")
+@ContextName("camel-context-file")
 public class CustomCamelContext extends DefaultCamelContext {
 
-	@Inject
-	private Logger log;
-	
-	@PostConstruct
-	public void postConstruct() {
-		log.info("Initializing custom camel context with name camel-file-code");
-		setName("camel-file-code");
-		setTypeConverterStatisticsEnabled(true);
-		disableJMX();
-	}
+    @Inject
+    private Logger log;
+
+    @PostConstruct
+    public void postConstruct() {
+	log.info("Initializing custom camel context with name camel-file-code");
+	setName("camel-file-code");
+	setTypeConverterStatisticsEnabled(true);
+    }
 
 }

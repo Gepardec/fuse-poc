@@ -11,7 +11,7 @@ import org.apache.camel.model.dataformat.ZipFileDataFormat;
 import org.slf4j.Logger;
 
 @ApplicationScoped
-@ContextName("camel-file-code")
+@ContextName("camel-context-file")
 public class FileRoute extends RouteBuilder {
 
     @Inject
@@ -25,7 +25,9 @@ public class FileRoute extends RouteBuilder {
 	zipFile.setUsingIterator(true);
 
 	from("file:/tmp/file/data/in?initialDelay=2000&delay=2000&include=.*.zip&move=.processed").id("inputFile")
-		.unmarshal(zipFile).split(bodyAs(Iterator.class)).streaming().process("zipMessageProcessor").to("file:/tmp/file/data/out").end();
+		.unmarshal(zipFile).split(bodyAs(Iterator.class)).streaming().process("fileProcessor").choice()
+		.when(header("CamelFileName").endsWith(".xml")).to("file:/tmp/file/data/out/xml")
+		.when(header("CamelFileName").endsWith(".txt")).to("file:/tmp/file/data/out/txt").endChoice().end();
 
 	log.debug("Built    file route");
     }

@@ -9,7 +9,7 @@
 	and limitations under the License. #L% -->
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
-    <camelContext id="spring-context" xmlns="http://camel.apache.org/schema/spring">
+    <camelContext id="camel-context-ftp" xmlns="http://camel.apache.org/schema/spring">
         <endpoint id="transform_xml" uri="dozer:transform_xml?sourceModel=generated_1539855140459.PurchaseOrder&amp;targetModel=generated_1539855141400.PurchaseOrder&amp;marshalId=generated_1539855141400&amp;unmarshalId=generated_1539855140459&amp;mappingFile=transformation.xml"/>
         <dataFormats>
             <jaxb contextPath="generated_1539855140459" id="generated_1539855140459"/>

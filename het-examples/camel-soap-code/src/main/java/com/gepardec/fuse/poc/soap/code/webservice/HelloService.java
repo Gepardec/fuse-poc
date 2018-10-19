@@ -11,7 +11,7 @@ import org.apache.camel.CamelContext;
 @WebService
 public class HelloService {
 
-    @Resource(name = "java:jboss/camel/context/spring-context")
+    @Resource(name = "java:jboss/camel/context/camel-context-soap")
     private CamelContext ctx;
 
     @WebMethod

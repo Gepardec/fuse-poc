@@ -1,4 +1,4 @@
-package com.gepardec.fuse.poc.soap.code.webservice;
+package com.gepardec.fuse.poc.soap.webservice;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

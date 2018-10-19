@@ -1,13 +1,12 @@
-package com.gepardec.fuse.poc.soap.code.producer;
+package com.gepardec.fuse.poc.soap.producer;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 
-import org.apache.camel.cdi.ContextName;
 import org.apache.camel.component.cxf.CxfEndpoint;
 
-import com.gepardec.fuse.poc.soap.code.webservice.SinkWebservice;
+import com.gepardec.fuse.poc.soap.webservice.SinkWebservice;
 
 @ApplicationScoped
 public class EndpointProducer {
@@ -18,7 +17,7 @@ public class EndpointProducer {
     CxfEndpoint createCxfEndpoint() {
 	final CxfEndpoint endpoint = new CxfEndpoint();
 	endpoint.setBeanId("cxfProducer");
-	endpoint.setAddress("http://localhost:8080/camel-test-spring/SinkWebservice");
+	endpoint.setAddress("http://localhost:8080/camel-soap/SinkWebservice");
 	endpoint.setServiceClass(SinkWebservice.class);
 
 	return endpoint;

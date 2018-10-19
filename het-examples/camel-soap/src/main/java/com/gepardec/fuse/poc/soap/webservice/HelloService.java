@@ -1,4 +1,4 @@
-package com.gepardec.fuse.poc.soap.code.webservice;
+package com.gepardec.fuse.poc.soap.webservice;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
@@ -16,7 +16,7 @@ public class HelloService {
 
     @WebMethod
     public String hello() {
-	ctx.createProducerTemplate().sendBody("direct:name", "hello");
+	ctx.createProducerTemplate().sendBody("direct:input", "hello");
 	return "hello";
     }
 }

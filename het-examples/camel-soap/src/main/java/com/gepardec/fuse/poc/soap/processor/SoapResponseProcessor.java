@@ -1,4 +1,4 @@
-package com.gepardec.fuse.poc.soap.code.processor;
+package com.gepardec.fuse.poc.soap.processor;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.cdi.ContextName;
 
-@Named("sinkProcessor")
+@Named("soapMessageProcessor")
 @ApplicationScoped
 public class SoapResponseProcessor implements Processor {
 

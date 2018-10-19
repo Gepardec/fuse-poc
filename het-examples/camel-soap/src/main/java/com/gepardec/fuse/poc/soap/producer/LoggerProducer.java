@@ -1,4 +1,4 @@
-package com.gepardec.fuse.poc.soap.code.producer;
+package com.gepardec.fuse.poc.soap.producer;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Dependent;

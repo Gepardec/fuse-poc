@@ -1,4 +1,4 @@
-package com.gepardec.fuse.poc.ftp.gui.transformer;
+package com.gepardec.fuse.poc.ftp.transformer;
 
 import java.util.Optional;
 

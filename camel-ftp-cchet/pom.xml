@@ -4,25 +4,26 @@
 	xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.gepardec.fuse.poc</groupId>
-	<artifactId>camel-soap</artifactId>
+	<groupId>com.mycompany</groupId>
+	<artifactId>camel-test-spring</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>camel-soap</name>
-	<description>Example of camel routes producing output to a soap endpoint</description>
+	<name>Fuse on EAP Camel Spring Application</name>
+	<description>Fuse on EAP Camel Example using Spring</description>
 	<properties>
 		<version.wildfly.camel>5.2.0.fuse-710021-redhat-00001</version.wildfly.camel>
 		<version.wildfly.arquillian>2.1.0.Final</version.wildfly.arquillian>
 		<version.maven.compiler.plugin>3.1</version.maven.compiler.plugin>
 		<version.wildfly>7.1.0.GA-redhat-11</version.wildfly>
 		<version.jboss.arquillian>1.1.10.Final</version.jboss.arquillian>
+		<jboss.home>${env.JBOSS_HOME}</jboss.home>
 		<version.maven.surefire.plugin>2.20.1</version.maven.surefire.plugin>
-		<server.config>standalone-camel.xml</server.config>
 		<version.apache.camel>2.21.0.fuse-000009</version.apache.camel>
+		<server.config>standalone-camel.xml</server.config>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<version.wildfly.maven.plugin>1.2.0.Final</version.wildfly.maven.plugin>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<version.wildfly.maven.plugin>1.2.0.Final</version.wildfly.maven.plugin>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<version.maven.war.plugin>3.0.0</version.maven.war.plugin>
 	</properties>
@@ -44,31 +45,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-cdi</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-cxf</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpasyncclient</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-transports-http-hc</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.jboss.spec.javax.servlet</groupId>
 			<artifactId>jboss-servlet-api_3.1_spec</artifactId>
 			<scope>provided</scope>
@@ -84,12 +60,49 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-dozer</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jaxb</artifactId>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>jboss-public-repository</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>eap-7.1-early-access-repository</id>
+			<url>http://download.eng.bos.redhat.com/brewroot/repos/jb-eap-7.1-rhel-7-maven-build/latest/maven</url>
+		</repository>
+		<repository>
+			<id>red-hat-ga-repository</id>
+			<url>https://maven.repository.redhat.com/ga</url>
+		</repository>
+		<repository>
+			<id>red-hat-ea-repository</id>
+			<name>Red Hat EA Repository</name>
+			<url>https://maven.repository.redhat.com/earlyaccess/all</url>
+		</repository>
+		<repository>
+			<id>jboss-ea-repository</id>
+			<name>Red Hat JBoss Early Access Repository</name>
+			<url>http://origin-repository.jboss.org/nexus/content/groups/ea</url>
+		</repository>
+	</repositories>
 	<build>
+		<resources>
+			<!-- <resource>
+				<directory>.transformations</directory>
+			</resource> -->
+			<resource>
+				<directory>src/main/resources/</directory>
+			</resource>
+		</resources>
 		<testResources>
 			<testResource>
 				<filtering>true</filtering>
@@ -107,41 +120,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>${version.maven.war.plugin}</version>
-			</plugin>
-			<plugin>
-				<groupId>org.wildfly.plugins</groupId>
-				<artifactId>wildfly-maven-plugin</artifactId>
-				<version>${version.wildfly.maven.plugin}</version>
-				<configuration>
-					<version>${version.wildfly}</version>
-					<serverConfig>${server.config}</serverConfig>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-codegen-plugin</artifactId>
-				<version>3.2.0</version>
-				<executions>
-					<execution>
-						<id>generate-sources</id>
-						<phase>generate-sources</phase>
-						<configuration>
-							<sourceRoot>${project.build.directory}/generated/cxf</sourceRoot>
-							<wsdlOptions>
-								<wsdlOption>
-									<wsdl>${basedir}/example.wsdl</wsdl>
-								</wsdlOption>
-							</wsdlOptions>
-						</configuration>
-						<goals>
-							<goal>wsdl2java</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<version>3.0.0</version>
@@ -154,17 +132,29 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>${project.build.directory}/generated/cxf</source>
+								<source>.transformations</source>
 							</sources>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${version.maven.war.plugin}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>${version.wildfly.maven.plugin}</version>
+				<configuration>
+					<version>${version.wildfly}</version>
+					<serverConfig>${server.config}</serverConfig>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<profiles>
 		<profile>
-			<id>default</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>

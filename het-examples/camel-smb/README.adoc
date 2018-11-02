@@ -14,6 +14,7 @@ Add system properties to standalone or start fuse with provided options ``-D...`
 * smb.mail.host=<the_mail_host>
 * smb.mail.port=<the_mail_port>
 * smb.mail.scheme=<used_mail_scheme>
+* smb.mail.to=<to_address>
 
 Copy the files of the ``data`` directory to the mounted share folder.
 

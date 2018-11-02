@@ -4,6 +4,7 @@ import at.ihet.camel.extras.smbj.SmbComponent;
 import at.ihet.camel.extras.smbj.SmbConfiguration;
 import at.ihet.camel.extras.smbj.SmbEndpoint;
 import org.apache.camel.CamelContext;
+import org.apache.camel.PropertyInject;
 import org.apache.camel.component.mail.MailComponent;
 import org.apache.camel.component.mail.MailConfiguration;
 import org.apache.camel.component.mail.MailEndpoint;
@@ -19,6 +20,19 @@ import java.net.URI;
  */
 @ApplicationScoped
 public class EndpoitProducer {
+
+    @PropertyInject(value = "smb.mail.host")
+    private String mailHost;
+    @PropertyInject(value = "smb.mail.port")
+    private String mailPort;
+    @PropertyInject(value = "smb.mail.scheme")
+    private String mailScheme;
+    @PropertyInject(value = "smb.mail.user")
+    private String mailUser;
+    @PropertyInject(value = "smb.mail.pwd")
+    private String mailPwd;
+    @PropertyInject(value = "smb.mail.to")
+    private String mailToAddress;
 
     @Produces
     @ApplicationScoped
@@ -88,16 +102,16 @@ public class EndpoitProducer {
     @ApplicationScoped
     @Named("mailFailedEndpoint")
     MailEndpoint createMailFailedEndpoint(final CamelContext ctx) {
-        final URI uri = URI.create(String.format("%s://%s:%d", System.getProperty("smb.mail.scheme"), System.getProperty("smb.mail.host"), Integer.valueOf(System.getProperty("smb.mail.port"))));
+        final URI uri = URI.create(String.format("%s://%s:%d", mailScheme, mailHost, Integer.valueOf(mailPort)));
         final MailEndpoint endpoint = new MailEndpoint(uri.toString(), new MailComponent(ctx), new MailConfiguration());
         endpoint.setCamelContext(ctx);
         endpoint.getConfiguration().configure(uri);
-        endpoint.getConfiguration().setUsername(System.getProperty("smb.mail.user"));
-        endpoint.getConfiguration().setPassword(System.getProperty("smb.mail.pwd"));
+        endpoint.getConfiguration().setUsername(mailUser);
+        endpoint.getConfiguration().setPassword(mailPwd);
         endpoint.getConfiguration().setContentType("text/plain");
         endpoint.getConfiguration().setSubject("Error during file processing");
         endpoint.getConfiguration().setFrom("error.reporter@camel.com");
-        endpoint.getConfiguration().setTo("thomas.herzog@gepardec.com");
+        endpoint.getConfiguration().setTo(mailToAddress);
 
         return endpoint;
     }

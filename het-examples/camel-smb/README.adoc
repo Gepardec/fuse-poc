@@ -1,0 +1,21 @@
+= Camel SMB example
+This example illustrates a camel smb route
+
+== How to prepare?
+This example uses a link:https://github.com/cchet-camel-extras/camel-smbj[camel-smbj] prototype implementation. Checkout the repository, build it and ensure
+that the artifact is available in your local maven repository and can be accessed by this example. +
+
+Start the docker-compose file with ``docker-compose up`` with in the ``docker`` directory. +
+
+Add system properties to standalone or start fuse with provided options ``-D...``
+
+* smb.mail.user=<the_mail_user>
+* smb.mail.pwd=<the_mail_password>
+* smb.mail.host=<the_mail_host>
+* smb.mail.port=<the_mail_port>
+* smb.mail.scheme=<used_mail_scheme>
+
+Copy the files of the ``data`` directory to the mounted share folder.
+
+== How to run?
+Build the war with ``mvn -s ./settings.xml clean install`` and deploy the war to ``$JBOSS_HOME/standalone/deployments``.

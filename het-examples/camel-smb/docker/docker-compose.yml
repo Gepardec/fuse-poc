@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  # The reverse proxy service
+  samba:
+    container_name: camel-jcifs
+    image: dperson/samba
+    command: ["-u", "source;source",
+              "-u", "target;target",
+              "-u", "backup;backup",
+              "-s", "source;/shares/source;yes;no;no;source;source;source",
+              "-s", "target;/shares/target;yes;no;no;target;target;target",
+              "-s", "backup;/shares/backup;yes;no;no;backup;backup;backup",
+              "-S",
+              "-W"]
+    restart: on-failure:5
+    ports:
+      - "50137:137"
+      - "50138:138"
+      - "50139:139"
+      - "50445:445"
+    volumes:
+      - /tmp/shares:/shares:rw

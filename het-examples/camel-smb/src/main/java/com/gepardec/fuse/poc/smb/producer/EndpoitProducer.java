@@ -1,13 +1,13 @@
 package com.gepardec.fuse.poc.smb.producer;
 
-import at.ihet.camel.extras.smbj.SmbComponent;
-import at.ihet.camel.extras.smbj.SmbConfiguration;
-import at.ihet.camel.extras.smbj.SmbEndpoint;
 import org.apache.camel.CamelContext;
 import org.apache.camel.PropertyInject;
 import org.apache.camel.component.mail.MailComponent;
 import org.apache.camel.component.mail.MailConfiguration;
 import org.apache.camel.component.mail.MailEndpoint;
+import org.apache.camel.component.smbj.SmbComponent;
+import org.apache.camel.component.smbj.SmbConfiguration;
+import org.apache.camel.component.smbj.SmbEndpoint;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
@@ -38,13 +38,13 @@ public class EndpoitProducer {
     @ApplicationScoped
     @Named("smbSourceEndpoint")
     SmbEndpoint createSmbSourceEndpoint(final CamelContext ctx) {
-        final URI uri = URI.create("smb://localhost:50445/source");
+        final URI uri = URI.create("smb://localhost:50445/source/test/me");
         final SmbEndpoint endpoint = new SmbEndpoint(uri.toString(), new SmbComponent(), new SmbConfiguration(uri));
         endpoint.setCamelContext(ctx);
         endpoint.setDownload(true);
         endpoint.setDelete(true);
-        endpoint.setDirectoryMustExist(true);
-        endpoint.setStartingDirectoryMustExist(true);
+//        endpoint.setDirectoryMustExist(true);
+//        endpoint.setStartingDirectoryMustExist(true);
         endpoint.setInitialDelay(5000);
         endpoint.setDelay(2000);
         endpoint.setMoveFailed(".filesFailed");
